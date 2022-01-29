@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-in^q$_b(lr0zr31*&(91v-o-229eaml#^-v)s(4!z(_rrqv5us
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['139.59.87.31','localhost']
 
 
 
@@ -84,8 +84,12 @@ WSGI_APPLICATION = 'authentication.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'authproject',
+	'USER': 'admin',
+	'PASSWORD' : 'oracle',
+	'HOST': 'localhost',
+	'PORT': '',
     }
 }
 
@@ -126,7 +130,7 @@ LOGIN_URL ='user:login'
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATIC_ROOT =  os.path.join(BASE_DIR, 'static','static')
+STATIC_ROOT =  os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static/dashboard"),
 )
