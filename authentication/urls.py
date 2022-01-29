@@ -8,4 +8,3 @@ urlpatterns = [
     path('', include('pwa.urls')),
 
 ]
-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
