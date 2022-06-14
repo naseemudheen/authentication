@@ -7,6 +7,7 @@ from .forms import UserAuthenticationForm,UserRegistrationForm
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from .models import MyUser
 
 # Create your views here.
 
@@ -28,7 +29,10 @@ class LoginPageView(View):
                 login(request, user)
                 return redirect("/")
         else:
-            return HttpResponse("<p>crendentials authentication  failed</p>")
+            messages.info(request,f'Invalid Username/Password')
+            return redirect('user:login')
+
+
 
 class LogoutPageView(View):
     template_name = 'user/logout.html'
@@ -59,13 +63,21 @@ class RegisterPageView(View):
 
     def post(self, request, *args, **kwargs):
         form =self.form_class(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            
-            form.save()
-            messages.success(request,f'Your Account has created you can Login now!')
-            return redirect('user:register')
+
+        username = request.POST['username']
+        # print(form['password1'])
+        # print(form['password2'])
+        
+        if (request.POST['password1']==request.POST['password2']):
+            if (MyUser.objects.filter(username=username)):
+                messages.warning(request,f'Username Already exists.')
+            else:
+                if form.is_valid():
+                    form.save()
+                    messages.success(request,f'Your Account has created you can Login now!')
+                else:
+                    messages.warning(request,form.errors)
         else:
-            print(form.errors)
-            # messages.warning(request,form.errors)
-            return redirect('user:register')
+            messages.warning(request,f'Password Mismatch')
+        return redirect('user:register')
+  

@@ -5,13 +5,12 @@ from user.models import MyUser
 
 
 class UserRegistrationForm(UserCreationForm):
-	# email = forms.EmailField(max_length=254, widget=forms.EmailInput(attrs={'class':'form-control'},))
 	password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control pwstrength','data-indicator':'pwindicator'},))
 	password2 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control'},))
 
 	class Meta:
 		model = MyUser
-		fields = ('username',)
+		fields = ('username','email')
 		widgets= {
 			'username' : forms.EmailInput(attrs={'class': 'required form-control',}),
 		}
@@ -23,13 +22,13 @@ class UserRegistrationForm(UserCreationForm):
 	# 		return email
 	# 	raise forms.ValidationError('Email "%s" is already in use.' % user)
 
-	def clean_username(self):
-		username = self.cleaned_data['username']
-		try:
-			user = MyUser.objects.exclude(pk=self.instance.pk).get(username=username)
-		except MyUser.DoesNotExist:
-			return username
-		raise forms.ValidationError('Username "%s" is already in use.' % username)
+	# def clean_username(self):
+	# 	username = self.cleaned_data['username']
+	# 	try:
+	# 		user = MyUser.objects.exclude(pk=self.instance.pk).get(username=username)
+	# 	except MyUser.DoesNotExist:
+	# 		return username
+	# 	raise forms.ValidationError('Username "%s" is already in use.' % username)
 	
 	# def clean_password1(self):
 	# 	password1 = self.cleaned_data['password1']
@@ -75,7 +74,5 @@ class UserUpdateForm(forms.ModelForm):
 	# 	except MyUser.DoesNotExist:
 	# 		return username
 	# 	raise forms.ValidationError('Username "%s" is already in use.' % username)
-
-
 
 
