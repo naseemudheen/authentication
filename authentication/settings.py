@@ -38,9 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic',
+
     'django.contrib.staticfiles',
 
+    'whitenoise.runserver_nostatic', 
 
     'user',
     # 'pwa',
@@ -86,10 +87,16 @@ WSGI_APPLICATION = 'authentication.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config()
-}
+#### in production
+# DATABASES = {}
+# DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -127,11 +134,12 @@ LOGIN_URL ='user:login'
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT =  os.path.join(BASE_DIR, 'static','static')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT =  os.path.join(BASE_DIR, 'static','static')
 
 
 
