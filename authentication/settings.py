@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['139.59.87.31','localhost']
 
 
-
+AUTH_USER_MODEL = 'user.MyUser'
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'user',
-    'pwa',
+    # 'pwa',
     'corsheaders',
 
 ]
@@ -132,7 +132,7 @@ LOGIN_URL ='user:login'
 STATIC_URL = 'static/'
 STATIC_ROOT =  os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static/dashboard"),
+    os.path.join(BASE_DIR, "static"),
 )
 
 
@@ -144,57 +144,57 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # pwa matifest
-PWA_APP_NAME = 'geeksforgeeks'
-PWA_APP_DESCRIPTION = "GeeksForGeeks PWA"
-PWA_APP_THEME_COLOR = '#000000'
-PWA_APP_BACKGROUND_COLOR = '#ffffff'
-PWA_APP_DISPLAY = 'standalone'
-PWA_APP_SCOPE = '/'
-PWA_APP_ORIENTATION = 'any'
-PWA_APP_START_URL = '/'
-PWA_APP_STATUS_BAR_COLOR = 'default'
-PWA_APP_ICONS = [
-	{
-		'src': 'static/img/whatsapp-160x160.png',
-		'sizes': '160x160'
-	}
-]
-PWA_APP_ICONS_APPLE = [
-	{
-		'src': 'static/img/whatsapp-160x160.png',
-		'sizes': '160x160'
-	}
-]
-PWA_APP_SPLASH_SCREEN = [
-	{
-		'src': 'static/img/whatsapp-160x160.png',
-		'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
-	}
-]
-PWA_APP_DIR = 'ltr'
-PWA_APP_LANG = 'en-US'
+# PWA_APP_NAME = 'geeksforgeeks'
+# PWA_APP_DESCRIPTION = "GeeksForGeeks PWA"
+# PWA_APP_THEME_COLOR = '#000000'
+# PWA_APP_BACKGROUND_COLOR = '#ffffff'
+# PWA_APP_DISPLAY = 'standalone'
+# PWA_APP_SCOPE = '/'
+# PWA_APP_ORIENTATION = 'any'
+# PWA_APP_START_URL = '/'
+# PWA_APP_STATUS_BAR_COLOR = 'default'
+# PWA_APP_ICONS = [
+# 	{
+# 		'src': 'static/img/whatsapp-160x160.png',
+# 		'sizes': '160x160'
+# 	}
+# ]
+# PWA_APP_ICONS_APPLE = [
+# 	{
+# 		'src': 'static/img/whatsapp-160x160.png',
+# 		'sizes': '160x160'
+# 	}
+# ]
+# PWA_APP_SPLASH_SCREEN = [
+# 	{
+# 		'src': 'static/img/whatsapp-160x160.png',
+# 		'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+# 	}
+# ]
+# PWA_APP_DIR = 'ltr'
+# PWA_APP_LANG = 'en-US'
 
 
 # cores header
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-]
+# CORS_ALLOW_HEADERS = [
+#     'accept',
+#     'accept-encoding',
+#     'authorization',
+#     'content-type',
+#     'dnt',
+#     'origin',
+#     'user-agent',
+#     'x-csrftoken',
+#     'x-requested-with',
+# ]
 
-CORS_ALLOW_METHODS = [
-'DELETE',
-'GET',
-'OPTIONS',
-'PATCH',
-'POST',
-'PUT',
-]
+# CORS_ALLOW_METHODS = [
+# 'DELETE',
+# 'GET',
+# 'OPTIONS',
+# 'PATCH',
+# 'POST',
+# 'PUT',
+# ]
