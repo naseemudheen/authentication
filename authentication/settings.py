@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
     'user',
     # 'pwa',
-    'corsheaders',
+    # 'corsheaders',
 
 ]
 
