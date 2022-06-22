@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'authentication.wsgi.application'
 
 ### in production
 DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+DATABASES['default'] = dj_database_url.config()
 
 # DATABASES = {
 #     'default': {
