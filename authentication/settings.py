@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-in^q$_b(lr0zr31*&(91v-o-229eaml#^-v)s(4!z(_rrqv5us
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['139.59.87.31','localhost']
+ALLOWED_HOSTS = ['139.59.87.31','localhost','*']
 
 
 AUTH_USER_MODEL = 'user.MyUser'
@@ -82,14 +82,20 @@ WSGI_APPLICATION = 'authentication.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'authproject',
+# 	'USER': 'admin',
+# 	'PASSWORD' : 'oracle',
+# 	'HOST': 'localhost',
+# 	'PORT': '',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'authproject',
-	'USER': 'admin',
-	'PASSWORD' : 'oracle',
-	'HOST': 'localhost',
-	'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -98,12 +104,12 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    # },
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
     # {
     #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     # },
@@ -130,7 +136,7 @@ LOGIN_URL ='user:login'
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT =  os.path.join(BASE_DIR, 'static/')
+# STATIC_ROOT =  os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
@@ -198,3 +204,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 'POST',
 # 'PUT',
 # ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mail.nextinno@gmail.com'
+EMAIL_HOST_PASSWORD = 'opyhqkzdmghxeime'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

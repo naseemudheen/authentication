@@ -5,15 +5,31 @@ from user.models import MyUser
 
 
 class UserRegistrationForm(UserCreationForm):
-	password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control pwstrength','data-indicator':'pwindicator'},))
-	password2 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control'},))
+    """
+      Form for Registering new users 
+    """
+    email = forms.EmailField(max_length=60, help_text = 'Required. Add a valid email address')
+    class Meta:
+        model = MyUser
+        fields = ('email', 'password1', 'password2')
 
-	class Meta:
-		model = MyUser
-		fields = ('username','email')
-		widgets= {
-			'username' : forms.EmailInput(attrs={'class': 'required form-control',}),
-		}
+    def __init__(self, *args, **kwargs):
+        """
+          specifying styles to fields 
+        """
+        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        for field in (self.fields['email'],self.fields['password1'],self.fields['password2']):
+            field.widget.attrs.update({'class': 'form-control '})
+# class UserRegistrationForm(UserCreationForm):
+# 	password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control pwstrength','data-indicator':'pwindicator'},))
+# 	password2 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control'},))
+
+# 	class Meta:
+# 		model = MyUser
+# 		fields = ('email',)
+# 		widgets= {
+# 			'email' : forms.EmailInput(attrs={'class': 'required form-control',}),
+# 		}
 	# def clean_email(self):
 	# 	email = self.cleaned_data['email'].lower()
 	# 	try:
@@ -36,14 +52,40 @@ class UserRegistrationForm(UserCreationForm):
 	# 		raise forms.ValidationError("password is too short")
 	# 	return password1
 
-
 class UserAuthenticationForm(forms.ModelForm):
+    """
+      Form for Logging in  users
+    """
+    password  = forms.CharField(label= 'Password', widget=forms.PasswordInput)
 
-	password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'required form-control',}))
-	username = forms.CharField(max_length=254, widget=forms.TextInput(attrs={'class':'form-control'},))
-	class Meta:
-		model = MyUser
-		fields = ('username', 'password')
+    class Meta:
+        model  =  MyUser
+        fields =  ('email', 'password')
+        widgets = {
+                   'email':forms.TextInput(attrs={'class':'form-control'}),
+                   'password':forms.TextInput(attrs={'class':'form-control'}),
+        }
+    def __init__(self, *args, **kwargs):
+        """
+          specifying styles to fields 
+        """
+        super(UserAuthenticationForm, self).__init__(*args, **kwargs)
+        for field in (self.fields['email'],self.fields['password']):
+            field.widget.attrs.update({'class': 'form-control '})
+
+    def clean(self):
+        if self.is_valid():
+
+            email = self.cleaned_data.get('email')
+            password = self.cleaned_data.get('password')
+            
+# class UserAuthenticationForm(forms.ModelForm):
+
+# 	password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'required form-control',}))
+# 	email = forms.EmailField(max_length=254, widget=forms.TextInput(attrs={'class':'form-control'},))
+# 	class Meta:
+# 		model = MyUser
+# 		fields = ('email', 'password')
 
 	# def clean(self):
 	# 	if self.is_valid():
@@ -52,12 +94,40 @@ class UserAuthenticationForm(forms.ModelForm):
 	# 		if not authenticate(username=username, password=password):
 	# 			raise forms.ValidationError("Invalid login")
 
+class UserUpdateform(forms.ModelForm):
+    """
+      Updating User Info
+    """
+    class Meta:
+        model  = MyUser
+        fields = ('email',)
+        widgets = {
+                   'email':forms.TextInput(attrs={'class':'form-control'}),
+                   'password':forms.TextInput(attrs={'class':'form-control'}),
+        }
 
-class UserUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        """
+          specifying styles to fields 
+        """
+        super(AccountUpdateform, self).__init__(*args, **kwargs)
+        for field in (self.fields['email']):
+            field.widget.attrs.update({'class': 'form-control '})
 
-	class Meta:
-		model = MyUser
-		fields = ('email', 'username', )
+    def clean_email(self):
+        if self.is_valid():
+            email = self.cleaned_data['email']
+            try:
+                account = Account.objects.exclude(pk = self.instance.pk).get(email=email)
+            except Account.DoesNotExist:
+                return email
+            raise forms.ValidationError("Email '%s' already in use." %email)
+    
+# class UserUpdateForm(forms.ModelForm):
+
+# 	class Meta:
+# 		model = MyUser
+# 		fields = ('email', )
 
 	# def clean_email(self):
 	# 	email = self.cleaned_data['email'].lower()
